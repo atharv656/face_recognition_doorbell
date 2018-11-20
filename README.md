@@ -11,5 +11,5 @@ Make sure that when you install Visual Studio Code, you check the C++ options.
 Also make sure that you put Cmake into your path in environment variables.
 
 Afterwards, you can try to download face_recognition using the pip command above.
-#### Other Operation systems
+#### macOS, Ubuntu, or Raspbian (Raspberry Pi’s operating system)
 Try to follow this [guide](https://www.pyimagesearch.com/2018/01/22/install-dlib-easy-complete-guide/)
