@@ -5,7 +5,7 @@ We use the face_recognition python library.
 #### Windows
 Easy download, type `pip install face_recognition` into the command prompt.
 
-If you get a lot of errors, you need to download Visual Studio Code 2015 or 2017 and cmake.
+If you get a lot of errors, you need to download Visual Studio Code 2015 or 2017 and cmake(probably).
 Look online for Visual Studio Code and cmake. 
 Make sure that when you install Visual Studio Code, you check the C++ options. 
 Also make sure that you put Cmake into your path in environment variables.
