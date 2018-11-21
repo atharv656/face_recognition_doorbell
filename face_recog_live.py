@@ -4,16 +4,16 @@ import cv2
 video_capture = cv2.VideoCapture(0)
 
 # sample pic of obama
-obama_image = face_recognition.load_image_file("obama.jpg")
-obama_face_encoding = face_recognition.face_encodings(obama_image)[0]
+john_image = face_recognition.load_image_file("john.jpg")
+john_face_encoding = face_recognition.face_encodings(john_image)[0]
 
 
 # Create arrays of known face encodings and their names
 known_face_encodings = [
-    obama_face_encoding,
+    john_face_encoding,
 ]
 known_face_names = [
-    "Barackyy Obama",
+    "John Yin",
 ]
 
 while True:
