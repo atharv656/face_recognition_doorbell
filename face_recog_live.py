@@ -8,12 +8,26 @@ john_image = face_recognition.load_image_file("john.jpg")
 john_face_encoding = face_recognition.face_encodings(john_image)[0]
 
 
+shaq_image = face_recognition.load_image_file("Shaq2.png")
+shaq_face_encoding = face_recognition.face_encodings(shaq_image)[0]
+
+trump_image = face_recognition.load_image_file("Donald_Trump.jpg")
+trump_face_encoding = face_recognition.face_encodings(trump_image)[0]
+
+
+
+
 # Create arrays of known face encodings and their names
 known_face_encodings = [
     john_face_encoding,
+    shaq_face_encoding,
+    trump_face_encoding
+
 ]
 known_face_names = [
     "John Yin",
+    "Shaq",
+    "Donald Trump"
 ]
 
 while True:
@@ -33,11 +47,14 @@ while True:
         matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
 
         name = "Unknown"
+        name_other = "Unknown"
 
         # If a match was found in known_face_encodings, just use the first one.
         if True in matches:
             first_match_index = matches.index(True)
             name = known_face_names[first_match_index]
+            second_match_index = matches.index(True)
+            name_other = known_face_names[second_match_index]
 
         # Draw a box around the face
         cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
@@ -46,6 +63,10 @@ while True:
         cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
         font = cv2.FONT_HERSHEY_DUPLEX
         cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
+
+        cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
+        font = cv2.FONT_HERSHEY_DUPLEX
+        cv2.putText(frame, name_other, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
 
     # Display the resulting image
     cv2.imshow('Video', frame)
