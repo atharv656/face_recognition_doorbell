@@ -3,7 +3,7 @@ import cv2
 
 video_capture = cv2.VideoCapture(0)
 
-# sample pic of obama
+# sample pic of me
 john_image = face_recognition.load_image_file("john.jpg")
 john_face_encoding = face_recognition.face_encodings(john_image)[0]
 
