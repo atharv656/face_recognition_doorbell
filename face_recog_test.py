@@ -1,26 +1,32 @@
 import face_recognition
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
+import cv2
 
 
-fig, ax = plt.subplots(1)
+def show_image(image):
+    cv2.namedWindow("output", cv2.WINDOW_NORMAL)
+    cv2.imshow('output', image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
-image = face_recognition.load_image_file("OldPerson.jpg")
 
-plt.imshow(image)
+def box_faces(filename):
+    """Displays the image of the given file with a green box around any detected faces
+        Returns the locations of the faces like [ (top, right, bottom, left) ]"""
 
-face_locations = face_recognition.face_locations(
-    image)  # the location of the face in a list of tuples like [ (top, right, bottom, left) ]
+    image = cv2.imread(filename)
 
-for face in face_locations:
-    x, y, width, height = (face[3],  # the x coord
-                           face[2],  # the y coord
-                           face[1] - face[3],  # the width
-                           face[0] - face[2])  # the height
+    face_locations = face_recognition.face_locations(image, number_of_times_to_upsample=3)
+    # the location of the face in a list of tuples like [ (top, right, bottom, left) ]
+    # if on a gpu computer, use model='cnn' parameter
+    # number_of_times_to_upsample should be higher if there are small faces
 
-    rect = patches.Rectangle((x, y), width, height,
-                             linewidth=1, edgecolor='r',
-                             facecolor='none')  # draw a rectangle around the face
-    ax.add_patch(rect)
+    for (top, right, bottom, left) in face_locations:
+        cv2.rectangle(image, (left, top), (right, bottom), (0, 255, 0), 1)  # draw a rectangle around the face
 
-plt.show()  # show the image with the rectangle
+    show_image(image)
+    return face_locations
+
+
+if __name__ == '__main__':
+    box_faces("John_Yin.jpg")
+
