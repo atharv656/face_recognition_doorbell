@@ -7,7 +7,6 @@ video_capture = cv2.VideoCapture(0)
 john_image = face_recognition.load_image_file("john.jpg")
 john_face_encoding = face_recognition.face_encodings(john_image)[0]
 
-
 # Create arrays of known face encodings and their names
 known_face_encodings = [
     john_face_encoding,
