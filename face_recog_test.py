@@ -38,10 +38,11 @@ def box_faces(filename, known_face_encodings=[], known_face_names=[]):
         # Draw a box around the face
         cv2.rectangle(image, (left, top), (right, bottom), (0, 0, 255), 1)
 
-        # Draw a label with a name below the face
-        cv2.rectangle(image, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
-
+        # set the scale of the font
         fontscale = np.prod(image.shape[:2]) / (1000 * 1000)
+
+        # Draw a label with a name below the face
+        cv2.rectangle(image, (left, bottom - int(40 * fontscale)), (right, bottom), (0, 0, 255), cv2.FILLED)
 
         font = cv2.FONT_HERSHEY_DUPLEX
 
@@ -52,10 +53,8 @@ def box_faces(filename, known_face_encodings=[], known_face_names=[]):
 
 
 if __name__ == '__main__':
-    box_faces("bernieyoung.jpg")
-
-    known_image = face_recognition.load_image_file("Donald_Trump.jpg")
-    known_face_encoding = face_recognition.face_encodings(known_image)[0]
+    donald_image = face_recognition.load_image_file("Donald_Trump.jpg")
+    donald_encoding = face_recognition.face_encodings(donald_image)[0]
 
     hillary_image = face_recognition.load_image_file("hillaryyoung.jpg")
     hillary_encoding = face_recognition.face_encodings(hillary_image)[0]
@@ -63,13 +62,13 @@ if __name__ == '__main__':
     bernie_image = face_recognition.load_image_file("bernieyoung.jpg")
     bernie_encoding = face_recognition.face_encodings(bernie_image)[0]
     known_encodings = [
-        known_face_encoding,
+        donald_encoding,
         hillary_encoding,
         bernie_encoding
     ]
 
     known_names = [
-        "Donald_Trump",
+        "Donald Trump",
         "Hillary Clinton",
         "Bernie Sanders"
     ]
