@@ -3,7 +3,10 @@ import cv2
 
 video_capture = cv2.VideoCapture(0)
 
-# sample pic of me
+# sample pic of me TODO Change Face Encoding method: Identification faulty (racist)
+george_image = face_recognition.load_image_file("George.jpg")
+george_face_encoding = face_recognition.face_encodings(george_image)[0]
+
 john_image = face_recognition.load_image_file("john.jpg")
 john_face_encoding = face_recognition.face_encodings(john_image)[0]
 
@@ -16,15 +19,16 @@ trump_face_encoding = face_recognition.face_encodings(trump_image)[0]
 
 
 
-
 # Create arrays of known face encodings and their names
 known_face_encodings = [
+    george_face_encoding,
     john_face_encoding,
     shaq_face_encoding,
-    trump_face_encoding
+    trump_face_encoding,
 
 ]
 known_face_names = [
+    "George Yin",
     "John Yin",
     "Shaq",
     "Donald Trump"
@@ -47,7 +51,7 @@ while True:
         matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
 
         name = "Unknown"
-        name_other = "Unknown"
+        name_other= "Unknown"
 
         # If a match was found in known_face_encodings, just use the first one.
         if True in matches:
