@@ -2,6 +2,7 @@
 
 ## Setup
 We use the face_recognition python library.
+[here](https://github.com/ageitgey/face_recognition) is its github
 #### Windows
 Easy download, type `pip install face_recognition` into the command prompt.
 
