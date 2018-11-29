@@ -27,13 +27,14 @@ def box_faces(filename, known_face_encodings=[], known_face_names=[]):
 
     for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
         matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
+        distances = face_recognition.face_distance(known_face_encodings, face_encoding)
 
         name = "Unknown"
 
         # If a match was found in known_face_encodings, just use the first one.
         if True in matches:
-            first_match_index = matches.index(True)
-            name = known_face_names[first_match_index]
+            best_match = np.argmin([abs(x) for x in distances])
+            name = known_face_names[best_match]
 
         # Draw a box around the face
         cv2.rectangle(image, (left, top), (right, bottom), (0, 0, 255), 1)
