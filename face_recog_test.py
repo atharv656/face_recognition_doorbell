@@ -6,7 +6,7 @@ import numpy as np
 def show_image(image):
     """ displays a window with an image
         press any key to close the window"""
-    cv2.namedWindow("output", cv2.WINDOW_NORMAL)
+    # cv2.namedWindow("output", cv2.WINDOW_NORMAL)
     cv2.imshow('output', image)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
@@ -33,14 +33,14 @@ def box_faces(filename, known_face_encodings=[], known_face_names=[]):
 
         # If a match was found in known_face_encodings, just use the first one.
         if True in matches:
-            best_match = np.argmin([abs(x) for x in distances])
+            best_match = int(np.argmin([abs(x) for x in distances]))
             name = known_face_names[best_match]
 
         # Draw a box around the face
         cv2.rectangle(image, (left, top), (right, bottom), (0, 0, 255), 1)
 
         # set the scale of the font
-        fontscale = np.prod(image.shape[:2]) / (1000 * 1000)
+        fontscale = np.prod(image.shape[:2]) / (900 * 900)
 
         # Draw a label with a name below the face
         cv2.rectangle(image, (left, bottom - int(40 * fontscale)), (right, bottom), (0, 0, 255), cv2.FILLED)
@@ -54,24 +54,47 @@ def box_faces(filename, known_face_encodings=[], known_face_names=[]):
 
 
 if __name__ == '__main__':
+    john_image = face_recognition.load_image_file("John.jpg")
+    print("encoding john")
+    john_encoding = face_recognition.face_encodings(john_image)[0]
+
     donald_image = face_recognition.load_image_file("Donald_Trump.jpg")
+    print("encoding donald")
     donald_encoding = face_recognition.face_encodings(donald_image)[0]
 
     hillary_image = face_recognition.load_image_file("hillaryyoung.jpg")
+    print("encoding hillary")
     hillary_encoding = face_recognition.face_encodings(hillary_image)[0]
 
     bernie_image = face_recognition.load_image_file("bernieyoung.jpg")
+    print("encoding bernie")
     bernie_encoding = face_recognition.face_encodings(bernie_image)[0]
+
+    andrew_image = face_recognition.load_image_file("Andrew.jpg")
+    print("encoding andrew")
+    andrew_encoding = face_recognition.face_encodings(andrew_image)[0]
+
+    shaq_image = face_recognition.load_image_file("shaq.jpg")
+    print("encoding shaq")
+    shaq_encoding = face_recognition.face_encodings(shaq_image)[0]
+
     known_encodings = [
         donald_encoding,
         hillary_encoding,
-        bernie_encoding
+        bernie_encoding,
+        andrew_encoding,
+        john_encoding,
+        shaq_encoding
+
     ]
 
     known_names = [
         "Donald Trump",
         "Hillary Clinton",
-        "Bernie Sanders"
+        "Bernie Sanders",
+        "Andrew Huang",
+        "John Yin",
+        "Shaq"
     ]
 
-    box_faces("hillary-trump-bernie.jpg", known_face_encodings=known_encodings, known_face_names=known_names)
+    box_faces("Shaq2.png", known_face_encodings=known_encodings, known_face_names=known_names)
