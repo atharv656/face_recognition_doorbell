@@ -40,7 +40,7 @@ def box_faces(filename, known_face_encodings=[], known_face_names=[]):
         cv2.rectangle(image, (left, top), (right, bottom), (0, 0, 255), 1)
 
         # set the scale of the font
-        fontscale = np.prod(image.shape[:2]) / (900 * 900)
+        fontscale = 1.0
 
         # Draw a label with a name below the face
         cv2.rectangle(image, (left, bottom - int(40 * fontscale)), (right, bottom), (0, 0, 255), cv2.FILLED)
@@ -97,4 +97,4 @@ if __name__ == '__main__':
         "Shaq"
     ]
 
-    box_faces("Shaq2.png", known_face_encodings=known_encodings, known_face_names=known_names)
+    box_faces("EddieMurphy2.jpg", known_face_encodings=known_encodings, known_face_names=known_names)
