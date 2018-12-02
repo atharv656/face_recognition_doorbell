@@ -99,7 +99,7 @@ else:
     client = Client(account_sid, auth_token)
     message = client.messages \
     .create(
-        body='Friend',
+        body=name,
         from_='+18303315151',
         to='+15184190103'
     )
