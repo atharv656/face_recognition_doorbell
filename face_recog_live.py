@@ -48,7 +48,6 @@ def box_faces(known_face_encodings=[], known_face_names=[]):
                 best_match = int(np.argmin([abs(x) for x in distances]))
                 name = known_face_names[best_match]
 
-
             # Draw a box around the face
             cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
 
@@ -82,4 +81,3 @@ if __name__ == '__main__':
     known_names = data["names"]
 
     box_faces(known_encodings, known_names)
-
