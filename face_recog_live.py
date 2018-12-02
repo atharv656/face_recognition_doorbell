@@ -61,11 +61,15 @@ def box_faces(known_face_encodings=[], known_face_names=[]):
             cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
             faces.append(name)
 
+            for name, lastTime in alreadySent:
+                if time.time() - lastTime >= 20:
+                    alreadySent.remove((name, lastTime))
+
             peopleToSend = []
             for face in faces:
-                if face not in alreadySent:
+                if face not in [x[0] for x in alreadySent]:
                     peopleToSend.append(face)
-                    alreadySent.append(face)
+                    alreadySent.append((face, time.time()))
             notify_user(peopleToSend)
 
         # Display the resulting image
