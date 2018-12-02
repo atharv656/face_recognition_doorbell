@@ -1,13 +1,8 @@
 import face_recognition
 import cv2
 import pafy
-<<<<<<< Updated upstream
-
-url = 'https://www.youtube.com/watch?v=gvhjWvqkoEc'
-=======
 from twilio.rest import Client
 url = 'https://www.youtube.com/watch?v=niq1apTPdAE'
->>>>>>> Stashed changes
 video = pafy.new(url)
 best = video.getbest(preftype="mp4")
 capture = cv2.VideoCapture()
