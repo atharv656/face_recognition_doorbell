@@ -1,8 +1,13 @@
 import face_recognition
 import cv2
 import pafy
+<<<<<<< Updated upstream
 
 url = 'https://www.youtube.com/watch?v=gvhjWvqkoEc'
+=======
+from twilio.rest import Client
+url = 'https://www.youtube.com/watch?v=niq1apTPdAE'
+>>>>>>> Stashed changes
 video = pafy.new(url)
 best = video.getbest(preftype="mp4")
 capture = cv2.VideoCapture()
@@ -81,6 +86,30 @@ while True:
     # Hit 'q' on the keyboard to quit!
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
+if name == 'Unknown':
+    # Your Account Sid and Auth Token from twilio.com/console
+    account_sid = 'AC728087a5bdc48ee727ab84ed337833b0'
+    auth_token = '3dfddade09d9aaae8c8bf4050f11a189'
+    client = Client(account_sid, auth_token)
+
+    message = client.messages \
+        .create(
+        body='Stranger',
+        from_='+18303315151',
+        to='+15184190103'
+    )
+else:
+    account_sid = 'AC728087a5bdc48ee727ab84ed337833b0'
+    auth_token = '3dfddade09d9aaae8c8bf4050f11a189'
+    client = Client(account_sid, auth_token)
+    message = client.messages \
+    .create(
+        body='Friend',
+        from_='+18303315151',
+        to='+15184190103'
+    )
+print(message.sid)
+
 
 # Release handle to the webcam
 capture.release()
