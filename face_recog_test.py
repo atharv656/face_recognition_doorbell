@@ -1,12 +1,13 @@
 import face_recognition
 import cv2
 import numpy as np
+import pickle
 
 
 def show_image(image):
     """ displays a window with an image
         press any key to close the window"""
-    # cv2.namedWindow("output", cv2.WINDOW_NORMAL)
+    cv2.namedWindow("output", cv2.WINDOW_NORMAL)
     cv2.imshow('output', image)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
@@ -18,7 +19,7 @@ def box_faces(filename, known_face_encodings=[], known_face_names=[]):
 
     image = cv2.imread(filename)  # read the image
 
-    face_locations = face_recognition.face_locations(image, number_of_times_to_upsample=3)
+    face_locations = face_recognition.face_locations(image, number_of_times_to_upsample=3, )
     # the location of the face in a list of tuples like [ (top, right, bottom, left) ]
     # if on a gpu computer, use model='cnn' parameter
     # number_of_times_to_upsample should be higher if there are small faces
@@ -54,47 +55,11 @@ def box_faces(filename, known_face_encodings=[], known_face_names=[]):
 
 
 if __name__ == '__main__':
-    john_image = face_recognition.load_image_file("John.jpg")
-    print("encoding john")
-    john_encoding = face_recognition.face_encodings(john_image)[0]
+    data = pickle.loads(open("encodings\encodings.pickle", "rb").read())
+    # print(data)
 
-    donald_image = face_recognition.load_image_file("Donald_Trump.jpg")
-    print("encoding donald")
-    donald_encoding = face_recognition.face_encodings(donald_image)[0]
+    known_encodings = data["encodings"]
 
-    hillary_image = face_recognition.load_image_file("hillaryyoung.jpg")
-    print("encoding hillary")
-    hillary_encoding = face_recognition.face_encodings(hillary_image)[0]
+    known_names = data["names"]
 
-    bernie_image = face_recognition.load_image_file("bernieyoung.jpg")
-    print("encoding bernie")
-    bernie_encoding = face_recognition.face_encodings(bernie_image)[0]
-
-    andrew_image = face_recognition.load_image_file("Andrew.jpg")
-    print("encoding andrew")
-    andrew_encoding = face_recognition.face_encodings(andrew_image)[0]
-
-    shaq_image = face_recognition.load_image_file("shaq.jpg")
-    print("encoding shaq")
-    shaq_encoding = face_recognition.face_encodings(shaq_image)[0]
-
-    known_encodings = [
-        donald_encoding,
-        hillary_encoding,
-        bernie_encoding,
-        andrew_encoding,
-        john_encoding,
-        shaq_encoding
-
-    ]
-
-    known_names = [
-        "Donald Trump",
-        "Hillary Clinton",
-        "Bernie Sanders",
-        "Andrew Huang",
-        "John Yin",
-        "Shaq"
-    ]
-
-    box_faces("EddieMurphy2.jpg", known_face_encodings=known_encodings, known_face_names=known_names)
+    box_faces("IMG_2310.jpg", known_face_encodings=known_encodings, known_face_names=known_names)
