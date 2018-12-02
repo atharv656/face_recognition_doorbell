@@ -11,8 +11,8 @@ from twilio.rest import Client
 
 def upload_to_database(item):
     dynamodb = boto3.resource('dynamodb',
-                              aws_access_key_id='AKIAIIHNSC4U5PJUDVEQ',
-                              aws_secret_access_key='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',
+                              aws_access_key_id='',
+                              aws_secret_access_key='',
                               region_name='us-east-1')
     table = dynamodb.Table('smartlockfaces')
     with table.batch_writer() as batch:
