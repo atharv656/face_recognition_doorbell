@@ -4,6 +4,7 @@ import numpy as np
 import pickle
 import boto3
 import time
+from twilio.rest import Client
 
 
 # sample pic of me TODO Change Face Encoding method: Identification faulty (racist)
@@ -22,6 +23,9 @@ def box_faces(known_face_encodings=[], known_face_names=[]):
     """Displays the image of the given file with a green box around any detected faces
         Returns the locations of the faces like [ (top, right, bottom, left) ]"""
     video_capture = cv2.VideoCapture(0)
+
+    alreadySent = []
+
     while True:
         # Grab a single frame of video
         ret, frame = video_capture.read()
@@ -57,19 +61,61 @@ def box_faces(known_face_encodings=[], known_face_names=[]):
             cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
             faces.append(name)
 
+            peopleToSend = []
+            for face in faces:
+                if face not in alreadySent:
+                    peopleToSend.append(face)
+                    alreadySent.append(face)
+            notify_user(peopleToSend)
+
         # Display the resulting image
         if len(face_locations) > 0:
             upload_to_database(str(faces))
-
         cv2.imshow('Video', frame)
-
         # Hit 'q' on the keyboard to quit!
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
-
     # once stream is done
     video_capture.release()
     cv2.destroyAllWindows()
+
+
+def notify_user(people):
+    if 'Unknown' in people:
+        # Your Account Sid and Auth Token from twilio.com/console
+        account_sid = 'AC728087a5bdc48ee727ab84ed337833b0'
+        auth_token = '3dfddade09d9aaae8c8bf4050f11a189'
+        client = Client(account_sid, auth_token)
+
+        client.messages.create(
+            body='There is a stranger among you',
+            from_='+18303315151',
+            to='+15184190103'
+        )
+    elif people == []:
+        return
+    else:
+        account_sid = 'AC728087a5bdc48ee727ab84ed337833b0'
+        auth_token = '3dfddade09d9aaae8c8bf4050f11a189'
+        client = Client(account_sid, auth_token)
+        client.messages.create(
+            body=format_list_of_names(people),
+            from_='+18303315151',
+            to='+15184190103'
+        )
+
+
+def format_list_of_names(names):
+    retStr = ""
+    if len(names) == 2:
+        return names[0] + " and " + names[1] + " are at your door."
+    elif len(names) == 1:
+        return names[0] + " is at your door."
+    else:
+        for name in names[:-1]:
+            retStr += name + ", "
+        retStr += " and " + names[len(names)]
+        return retStr
 
 
 if __name__ == '__main__':
