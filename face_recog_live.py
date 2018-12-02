@@ -5,11 +5,11 @@ import numpy as np
 from notify_run import Notify
 
 # Get a reference to webcam #0 (the default one)
-#url = 'https://www.youtube.com/watch?v=x90jgZlECzE'
-#video = pafy.new(url)
-#best = video.getbest(preftype="mp4")
-#capture = cv2.VideoCapture()
-#capture.open(best.url)
+# url = 'https://www.youtube.com/watch?v=x90jgZlECzE'
+# video = pafy.new(url)
+# best = video.getbest(preftype="mp4")
+# capture = cv2.VideoCapture()
+# capture.open(best.url)
 video_capture = cv2.VideoCapture(0)
 notify = Notify()
 # sample pic of me TODO Change Face Encoding method: Identification faulty (racist)
@@ -65,7 +65,6 @@ while True:
     # Hit 'q' on the keyboard to quit!
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
-
 
 # once stream is done
 video_capture.release()

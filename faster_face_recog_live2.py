@@ -2,7 +2,7 @@ import face_recognition
 import cv2
 import pafy
 
-url = 'https://www.youtube.com/watch?v=niq1apTPdAE'
+url = 'https://www.youtube.com/watch?v=gvhjWvqkoEc'
 video = pafy.new(url)
 best = video.getbest(preftype="mp4")
 capture = cv2.VideoCapture()
@@ -53,7 +53,6 @@ while True:
             if True in matches:
                 first_match_index = matches.index(True)
                 name = known_face_names[first_match_index]
-
 
             face_names.append(name)
 
