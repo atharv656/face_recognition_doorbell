@@ -70,11 +70,11 @@ def box_faces(known_face_encodings=[], known_face_names=[]):
                 if face not in [x[0] for x in alreadySent]:
                     peopleToSend.append(face)
                     alreadySent.append((face, time.time()))
-            notify_user(peopleToSend)
+            # notify_user(peopleToSend)
 
         # Display the resulting image
-        if len(face_locations) > 0:
-            upload_to_database(str(faces))
+        # if len(face_locations) > 0:
+        # upload_to_database(str(faces))
         cv2.imshow('Video', frame)
         # Hit 'q' on the keyboard to quit!
         if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -85,6 +85,7 @@ def box_faces(known_face_encodings=[], known_face_names=[]):
 
 
 def notify_user(people):
+    print("sending text")
     if 'Unknown' in people:
         # Your Account Sid and Auth Token from twilio.com/console
         account_sid = 'AC728087a5bdc48ee727ab84ed337833b0'
