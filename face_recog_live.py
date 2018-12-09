@@ -7,7 +7,7 @@ import time
 from twilio.rest import Client
 
 
-# sample pic of me TODO Change Face Encoding method: Identification faulty (racist)
+# TODO Change Face Encoding method: Identification faulty (racist)
 
 def upload_to_database(item):
     dynamodb = boto3.resource('dynamodb',
@@ -19,7 +19,7 @@ def upload_to_database(item):
         batch.put_item(Item={'time': int(time.time()), 'faces': item})
 
 
-def box_faces(known_face_encodings=[], known_face_names=[]):
+def box_faces(known_face_encodings=[], known_face_names=[], model="hog"):
     """Displays the image of the given file with a green box around any detected faces
         Returns the locations of the faces like [ (top, right, bottom, left) ]"""
     video_capture = cv2.VideoCapture(0)
@@ -34,7 +34,7 @@ def box_faces(known_face_encodings=[], known_face_names=[]):
         rgb_frame = frame[:, :, ::-1]
 
         # Find all the faces and face encodings in the frame of video
-        face_locations = face_recognition.face_locations(rgb_frame)
+        face_locations = face_recognition.face_locations(rgb_frame, model=model)
 
         face_encodings = face_recognition.face_encodings(rgb_frame, face_locations)
 
@@ -43,7 +43,7 @@ def box_faces(known_face_encodings=[], known_face_names=[]):
         # Loop through each face in this frame of video
         for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
             # See if the face is a match for the known face(s)
-            matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
+            matches = face_recognition.compare_faces(known_face_encodings, face_encoding, tolerance=0.5)
             distances = face_recognition.face_distance(known_face_encodings, face_encoding)
             name = "Unknown"
 
@@ -131,4 +131,4 @@ if __name__ == '__main__':
 
     known_names = data["names"]
 
-    box_faces(known_encodings, known_names)
+    box_faces(known_encodings, known_names, model="cnn")
