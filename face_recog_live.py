@@ -2,21 +2,11 @@ import face_recognition
 import cv2
 import numpy as np
 import pickle
-import boto3
 import time
 from twilio.rest import Client
 
 
 # TODO Change Face Encoding method: Identification faulty (racist)
-
-def upload_to_database(item):
-    dynamodb = boto3.resource('dynamodb',
-                              aws_access_key_id='',
-                              aws_secret_access_key='',
-                              region_name='us-east-1')
-    table = dynamodb.Table('smartlockfaces')
-    with table.batch_writer() as batch:
-        batch.put_item(Item={'time': int(time.time()), 'faces': item})
 
 
 def box_faces(known_face_encodings=[], known_face_names=[], model="hog"):
@@ -73,8 +63,6 @@ def box_faces(known_face_encodings=[], known_face_names=[], model="hog"):
             # notify_user(peopleToSend)
 
         # Display the resulting image
-        # if len(face_locations) > 0:
-        # upload_to_database(str(faces))
         cv2.imshow('Video', frame)
         # Hit 'q' on the keyboard to quit!
         if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -88,25 +76,25 @@ def notify_user(people):
     print("sending text")
     if 'Unknown' in people:
         # Your Account Sid and Auth Token from twilio.com/console
-        account_sid = 'AC728087a5bdc48ee727ab84ed337833b0'
-        auth_token = '3dfddade09d9aaae8c8bf4050f11a189'
+        account_sid = ''
+        auth_token = ''
         client = Client(account_sid, auth_token)
 
         client.messages.create(
             body='There is a stranger among you',
-            from_='+18303315151',
-            to='+15184190103'
+            from_='+',
+            to='+'
         )
     elif people == []:
         return
     else:
-        account_sid = 'AC728087a5bdc48ee727ab84ed337833b0'
-        auth_token = '3dfddade09d9aaae8c8bf4050f11a189'
+        account_sid = ''
+        auth_token = ''
         client = Client(account_sid, auth_token)
         client.messages.create(
             body=format_list_of_names(people),
-            from_='+18303315151',
-            to='+15184190103'
+            from_='',
+            to=''
         )
 
 
@@ -126,7 +114,6 @@ def format_list_of_names(names):
 if __name__ == '__main__':
     data = pickle.loads(open("encodings\encodings.pickle", "rb").read())
     # print(data)
-
     known_encodings = data["encodings"]
 
     known_names = data["names"]

@@ -19,7 +19,7 @@ def box_faces(filename, known_face_encodings=[], known_face_names=[]):
 
     image = cv2.imread(filename)  # read the image
 
-    face_locations = face_recognition.face_locations(image, number_of_times_to_upsample=3, )
+    face_locations = face_recognition.face_locations(image, number_of_times_to_upsample=2, model="cnn")
     # the location of the face in a list of tuples like [ (top, right, bottom, left) ]
     # if on a gpu computer, use model='cnn' parameter
     # number_of_times_to_upsample should be higher if there are small faces
