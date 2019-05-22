@@ -40,5 +40,8 @@ Try to follow this [guide](https://www.pyimagesearch.com/2018/01/22/install-dlib
 ## How to use?
 If you have a webcam, run face_recog_live.py.
 If not, then you can run face_recog_test.py and change the image file at the bottom.
-
+### Encoding new faces
+Add the pictures that you want to encode into the "dataset" folder under a folder of the name of the person in the image.
+Then run in the command prompt in this directory:
+`python encode_faces.py -i dataset -e encodings/encodings.pickle`
 MIT © [fidgetspinnerkid](https://github.com/fidgetspinnerkid)
